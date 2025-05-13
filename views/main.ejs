@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" />
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+
+
+
+
+    <div class="flip-container" id="flipBox">
+        <div class="flip-inner">
+
+
+
+            <!-- Login Form -->
+
+
+            <div class="flip-front">
+                <h2>Welcome Back</h2>
+                <form action="/signin" method="get">
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input name="email" type="email" placeholder="Email" required />
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input name="password" type="password" placeholder="Password" required />
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+                <div class="switch-link" id="toSignup">Don't have an account? Sign Up</div>
+            </div>
+
+
+
+
+
+            <!-- Signup Form -->
+            <div class="flip-back">
+                <h2>Create Account</h2>
+                <form action="/signup" method="post">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input name="username" type="text" placeholder="Full Name" required />
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input name="email" type="email" placeholder="Email" required />
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input name="password" type="password" placeholder="Password" required />
+                    </div>
+                    <button type="submit">Sign Up</button>
+                </form>
+                <div class="switch-link" id="toLogin">Already have an account? Login</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>

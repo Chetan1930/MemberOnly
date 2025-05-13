@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OtakuTreasure - Anime Merchandise Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Mochiy+Pop+P+One&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#ff36b5',secondary:'#6a11cb'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        
+        body {
+            font-family: 'Mochiy Pop P One', sans-serif;
+            background-color: #0c0c16;
+            color: #fff;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .logo {
+            font-family: 'Pacifico', serif;
+        }
+        
+        .hero-section {
+            background-image: url('https://readdy.ai/api/search-image?query=anime%20cyberpunk%20city%20with%20neon%20lights%2C%20cherry%20blossoms%20floating%20in%20the%20air%2C%20futuristic%20buildings%2C%20night%20scene%20with%20purple%20and%20pink%20color%20scheme%2C%20digital%20art%2C%20high%20quality%2C%20detailed%20illustration%2C%20no%20text&width=1600&height=800&seq=1&orientation=landscape');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(12,12,22,0.9) 0%, rgba(12,12,22,0.7) 50%, rgba(12,12,22,0.4) 100%);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .neon-glow {
+            text-shadow: 0 0 5px #ff36b5, 0 0 10px #ff36b5, 0 0 15px #ff36b5;
+        }
+        
+        .neon-button {
+            box-shadow: 0 0 5px #ff36b5, 0 0 10px #ff36b5;
+            transition: all 0.3s ease;
+        }
+        
+        .neon-button:hover {
+            box-shadow: 0 0 10px #ff36b5, 0 0 20px #ff36b5, 0 0 30px #ff36b5;
+        }
+        
+        .category-card {
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff36b5;
+            box-shadow: 0 0 15px rgba(255, 54, 181, 0.5);
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+            background: rgba(20, 20, 35, 0.7);
+            border: 1px solid rgba(106, 17, 203, 0.2);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff36b5;
+            box-shadow: 0 0 15px rgba(255, 54, 181, 0.5);
+        }
+        
+        .product-overlay {
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover .product-overlay {
+            opacity: 1;
+        }
+        
+        .anime-grid-item {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .anime-grid-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .anime-grid-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .anime-grid-item img {
+            transition: all 0.3s ease;
+        }
+        
+        .custom-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #6a11cb;
+            border-radius: 4px;
+            background-color: transparent;
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .custom-checkbox:checked {
+            background-color: #ff36b5;
+            border-color: #ff36b5;
+        }
+        
+        .custom-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 14px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .carousel-container {
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .carousel-slide {
+            flex: 0 0 100%;
+        }
+        
+        .carousel-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-indicator.active {
+            background-color: #ff36b5;
+            transform: scale(1.2);
+        }
+        
+        .cherry-blossom {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-image: url('https://readdy.ai/api/search-image?query=simple%20pink%20cherry%20blossom%20petal%2C%20minimalist%2C%20transparent%20background%2C%20single%20petal&width=50&height=50&seq=2&orientation=squarish');
+            background-size: contain;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0.7;
+            animation: fall linear forwards;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-5vh) rotate(0deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#0c0c16] to-[#1a1a2e] shadow-lg">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <a href="#" class="logo text-primary text-3xl mr-8">logo</a>
+                    <nav class="hidden md:flex space-x-6">
+                        <a href="#" class="text-white hover:text-primary transition-colors">Home</a>
+                        <div class="relative group">
+                            <button class="text-white hover:text-primary transition-colors flex items-center whitespace-nowrap">
+                                Categories
+                                <span class="w-6 h-6 flex items-center justify-center ml-1">
+                                    <i class="ri-arrow-down-s-line"></i>
+                                </span>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-48 rounded bg-[#1a1a2e] shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border border-[#6a11cb]">
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-[#2a2a4e] hover:text-primary">Figures</a>
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-[#2a2a4e] hover:text-primary">Apparel</a>
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-[#2a2a4e] hover:text-primary">Decor</a>
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-[#2a2a4e] hover:text-primary">Manga</a>
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-[#2a2a4e] hover:text-primary">Accessories</a>
+                            </div>
+                        </div>
+                        <a href="#" class="text-white hover:text-primary transition-colors">Anime Wiki</a>
+                        <a href="#" class="text-white hover:text-primary transition-colors">Blog</a>
+                        <a href="#" class="text-white hover:text-primary transition-colors">Deals</a>
+                    </nav>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative hidden md:block">
+                        <input type="text" placeholder="Search anime or merch..." class="bg-[#1a1a2e] text-white border border-[#6a11cb] rounded-full py-2 pl-10 pr-4 w-64 focus:outline-none focus:border-primary text-sm">
+                        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center text-gray-400">
+                            <i class="ri-search-line"></i>
+                        </span>
+                    </div>
+                    
+                    <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-[#1a1a2e] text-white hover:text-primary transition-colors relative">
+                        <i class="ri-heart-line"></i>
+                        <span class="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center bg-primary text-white rounded-full text-xs">3</span>
+                    </a>
+                    
+                    <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-[#1a1a2e] text-white hover:text-primary transition-colors relative">
+                        <i class="ri-shopping-cart-line"></i>
+                        <span class="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center bg-primary text-white rounded-full text-xs">2</span>
+                    </a>
+                    
+                    <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-[#1a1a2e] text-white hover:text-primary transition-colors md:hidden">
+                        <i class="ri-menu-line"></i>
+                    </a>
+                    
+                    <a href="#" class="hidden md:flex items-center justify-center px-4 py-2 bg-primary text-white rounded-button neon-button whitespace-nowrap">
+                        <span class="w-5 h-5 flex items-center justify-center mr-2">
+                            <i class="ri-user-line"></i>
+                        </span>
+                        Sign In
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="hero-section h-[600px] flex items-center">
+            <div class="container mx-auto px-4 hero-content">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 neon-glow">Discover Your Anime Treasures</h1>
+                        <p class="text-lg mb-8 text-gray-200 max-w-lg">Find the best merchandise from your favorite anime series. From collectible figures to stylish apparel, we've got everything an otaku could dream of!</p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#" class="px-6 py-3 bg-primary text-white rounded-button neon-button font-medium whitespace-nowrap">Shop Now</a>
+                            <a href="#" class="px-6 py-3 bg-transparent border border-white text-white rounded-button hover:border-primary hover:text-primary transition-colors whitespace-nowrap">Explore Collections</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Categories -->
+        <section class="py-12 bg-[#0c0c16]">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <a href="#" class="category-card bg-[#1a1a2e] rounded p-4 flex flex-col items-center">
+                        <div class="w-16 h-16 flex items-center justify-center bg-[#2a2a4e] rounded-full mb-3">
+                            <i class="ri-robot-line text-3xl text-primary"></i>
+                        </div>
+                        <h3 class="text-lg font-medium">Figures</h3>
+                    </a>
+                    <a href="#" class="category-card bg-[#1a1a2e] rounded p-4 flex flex-col items-center">
+                        <div class="w-16 h-16 flex items-center justify-center bg-[#2a2a4e] rounded-full mb-3">
+                            <i class="ri-t-shirt-line text-3xl text-primary"></i>
+                        </div>
+                        <h3 class="text-lg font-medium">Apparel</h3>
+                    </a>
+                    <a href="#" class="category-card bg-[#1a1a2e] rounded p-4 flex flex-col items-center">
+                        <div class="w-16 h-16 flex items-center justify-center bg-[#2a2a4e] rounded-full mb-3">
+                            <i class="ri-home-4-line text-3xl text-primary"></i>
+                        </div>
+                        <h3 class="text-lg font-medium">Decor</h3>
+                    </a>
+                    <a href="#" class="category-card bg-[#1a1a2e] rounded p-4 flex flex-col items-center">
+                        <div class="w-16 h-16 flex items-center justify-center bg-[#2a2a4e] rounded-full mb-3">
+                            <i class="ri-book-open-line text-3xl text-primary"></i>
+                        </div>
+                        <h3 class="text-lg font-medium">Manga</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trending Products Carousel -->
+        <section class="py-12 bg-[#0c0c16]">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-2xl md:text-3xl font-bold neon-glow">Trending Products</h2>
+                    <div class="flex space-x-2">
+                        <button id="prev-btn" class="w-10 h-10 flex items-center justify-center rounded-full bg-[#1a1a2e] text-white hover:text-primary transition-colors">
+                            <i class="ri-arrow-left-s-line"></i>
+                        </button>
+                        <button id="next-btn" class="w-10 h-10 flex items-center justify-center rounded-full bg-[#1a1a2e] text-white hover:text-primary transition-colors">
+                            <i class="ri-arrow-right-s-line"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                                <div class="product-card rounded overflow-hidden">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20figure%20of%20Naruto%20Uzumaki%20in%20dynamic%20pose%2C%20detailed%20collectible%20statue%2C%20professional%20product%20photography%20on%20simple%20background%2C%20high%20resolution&width=400&height=400&seq=3&orientation=squarish" alt="Naruto Figure" class="w-full h-64 object-cover object-top">
+                                        <div class="product-overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                            <div class="flex space-x-2">
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-eye-line"></i>
+                                                </button>
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-heart-line"></i>
+                                                </button>
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-shopping-cart-line"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="absolute top-2 left-2 bg-primary text-white px-2 py-1 rounded text-xs">New</div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-medium mb-2">Naruto Uzumaki Sage Mode Figure</h3>
+                                        <div class="flex items-center mb-2">
+                                            <div class="flex text-yellow-400">
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-half-fill"></i>
+                                            </div>
+                                            <span class="text-gray-400 text-sm ml-2">(128)</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <span class="text-gray-400 text-sm line-through">$89.99</span>
+                                                <span class="text-white text-lg font-bold">$69.99</span>
+                                            </div>
+                                            <span class="text-xs bg-[#6a11cb] px-2 py-1 rounded">22% OFF</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="product-card rounded overflow-hidden">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20hoodie%20with%20Demon%20Slayer%20design%2C%20stylish%20black%20hoodie%20with%20Tanjiro%20pattern%2C%20fashion%20photography%20on%20simple%20background%2C%20high%20resolution&width=400&height=400&seq=4&orientation=squarish" alt="Demon Slayer Hoodie" class="w-full h-64 object-cover object-top">
+                                        <div class="product-overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                            <div class="flex space-x-2">
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-eye-line"></i>
+                                                </button>
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-heart-line"></i>
+                                                </button>
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-shopping-cart-line"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="absolute top-2 left-2 bg-[#6a11cb] text-white px-2 py-1 rounded text-xs">Trending</div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-medium mb-2">Demon Slayer Tanjiro Hoodie</h3>
+                                        <div class="flex items-center mb-2">
+                                            <div class="flex text-yellow-400">
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-line"></i>
+                                            </div>
+                                            <span class="text-gray-400 text-sm ml-2">(94)</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <span class="text-white text-lg font-bold">$49.99</span>
+                                            </div>
+                                            <span class="text-xs bg-green-600 px-2 py-1 rounded">In Stock</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="product-card rounded overflow-hidden">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20wall%20scroll%20featuring%20Attack%20on%20Titan%2C%20detailed%20fabric%20poster%20with%20Eren%20Yeager%20artwork%2C%20home%20decor%20product%20photography%20on%20simple%20background%2C%20high%20resolution&width=400&height=400&seq=5&orientation=squarish" alt="Attack on Titan Wall Scroll" class="w-full h-64 object-cover object-top">
+                                        <div class="product-overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                            <div class="flex space-x-2">
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-eye-line"></i>
+                                                </button>
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-heart-line"></i>
+                                                </button>
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-shopping-cart-line"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-medium mb-2">Attack on Titan Wall Scroll</h3>
+                                        <div class="flex items-center mb-2">
+                                            <div class="flex text-yellow-400">
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                            </div>
+                                            <span class="text-gray-400 text-sm ml-2">(216)</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <span class="text-gray-400 text-sm line-through">$34.99</span>
+                                                <span class="text-white text-lg font-bold">$24.99</span>
+                                            </div>
+                                            <span class="text-xs bg-[#6a11cb] px-2 py-1 rounded">29% OFF</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="product-card rounded overflow-hidden">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=high%20quality%20My%20Hero%20Academia%20manga%20collection%2C%20multiple%20volumes%20boxed%20set%2C%20professional%20product%20photography%20on%20simple%20background%2C%20high%20resolution&width=400&height=400&seq=6&orientation=squarish" alt="My Hero Academia Manga" class="w-full h-64 object-cover object-top">
+                                        <div class="product-overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                            <div class="flex space-x-2">
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-eye-line"></i>
+                                                </button>
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-heart-line"></i>
+                                                </button>
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-shopping-cart-line"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="absolute top-2 left-2 bg-red-600 text-white px-2 py-1 rounded text-xs">Limited</div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-medium mb-2">My Hero Academia Manga Box Set</h3>
+                                        <div class="flex items-center mb-2">
+                                            <div class="flex text-yellow-400">
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-half-fill"></i>
+                                            </div>
+                                            <span class="text-gray-400 text-sm ml-2">(153)</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <span class="text-white text-lg font-bold">$129.99</span>
+                                            </div>
+                                            <span class="text-xs bg-orange-600 px-2 py-1 rounded">Best Seller</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="carousel-slide">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                                <div class="product-card rounded overflow-hidden">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20figure%20of%20Goku%20Ultra%20Instinct%20from%20Dragon%20Ball%20Super%2C%20detailed%20collectible%20statue%2C%20professional%20product%20photography%20on%20simple%20background%2C%20high%20resolution&width=400&height=400&seq=7&orientation=squarish" alt="Goku Figure" class="w-full h-64 object-cover object-top">
+                                        <div class="product-overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                            <div class="flex space-x-2">
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-eye-line"></i>
+                                                </button>
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-heart-line"></i>
+                                                </button>
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-shopping-cart-line"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-medium mb-2">Goku Ultra Instinct Figure</h3>
+                                        <div class="flex items-center mb-2">
+                                            <div class="flex text-yellow-400">
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-line"></i>
+                                            </div>
+                                            <span class="text-gray-400 text-sm ml-2">(87)</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <span class="text-white text-lg font-bold">$79.99</span>
+                                            </div>
+                                            <span class="text-xs bg-green-600 px-2 py-1 rounded">In Stock</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="product-card rounded overflow-hidden">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20t-shirt%20with%20One%20Piece%20design%2C%20stylish%20black%20t-shirt%20with%20Luffy%20artwork%2C%20fashion%20photography%20on%20simple%20background%2C%20high%20resolution&width=400&height=400&seq=8&orientation=squarish" alt="One Piece T-Shirt" class="w-full h-64 object-cover object-top">
+                                        <div class="product-overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                            <div class="flex space-x-2">
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-eye-line"></i>
+                                                </button>
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-heart-line"></i>
+                                                </button>
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-shopping-cart-line"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="absolute top-2 left-2 bg-[#6a11cb] text-white px-2 py-1 rounded text-xs">Trending</div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-medium mb-2">One Piece Luffy T-Shirt</h3>
+                                        <div class="flex items-center mb-2">
+                                            <div class="flex text-yellow-400">
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-half-fill"></i>
+                                            </div>
+                                            <span class="text-gray-400 text-sm ml-2">(142)</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <span class="text-gray-400 text-sm line-through">$29.99</span>
+                                                <span class="text-white text-lg font-bold">$19.99</span>
+                                            </div>
+                                            <span class="text-xs bg-[#6a11cb] px-2 py-1 rounded">33% OFF</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="product-card rounded overflow-hidden">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20LED%20lamp%20with%20Jujutsu%20Kaisen%20design%2C%20Gojo%20Satoru%20themed%20night%20light%2C%20home%20decor%20product%20photography%20on%20simple%20background%2C%20high%20resolution&width=400&height=400&seq=9&orientation=squarish" alt="Jujutsu Kaisen Lamp" class="w-full h-64 object-cover object-top">
+                                        <div class="product-overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                            <div class="flex space-x-2">
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-eye-line"></i>
+                                                </button>
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-heart-line"></i>
+                                                </button>
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-shopping-cart-line"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="absolute top-2 left-2 bg-primary text-white px-2 py-1 rounded text-xs">New</div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-medium mb-2">Jujutsu Kaisen LED Lamp</h3>
+                                        <div class="flex items-center mb-2">
+                                            <div class="flex text-yellow-400">
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                            </div>
+                                            <span class="text-gray-400 text-sm ml-2">(76)</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <span class="text-white text-lg font-bold">$39.99</span>
+                                            </div>
+                                            <span class="text-xs bg-orange-600 px-2 py-1 rounded">Best Seller</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="product-card rounded overflow-hidden">
+                                    <div class="relative">
+                                        <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20plush%20toy%20of%20Totoro%20from%20My%20Neighbor%20Totoro%2C%20cute%20stuffed%20animal%2C%20professional%20product%20photography%20on%20simple%20background%2C%20high%20resolution&width=400&height=400&seq=10&orientation=squarish" alt="Totoro Plush" class="w-full h-64 object-cover object-top">
+                                        <div class="product-overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                            <div class="flex space-x-2">
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-eye-line"></i>
+                                                </button>
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-heart-line"></i>
+                                                </button>
+                                                <button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-[#1a1a2e] hover:bg-primary hover:text-white transition-colors !rounded-button">
+                                                    <i class="ri-shopping-cart-line"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-medium mb-2">Totoro Plush Toy</h3>
+                                        <div class="flex items-center mb-2">
+                                            <div class="flex text-yellow-400">
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-fill"></i>
+                                                <i class="ri-star-half-fill"></i>
+                                            </div>
+                                            <span class="text-gray-400 text-sm ml-2">(198)</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <span class="text-white text-lg font-bold">$24.99</span>
+                                            </div>
+                                            <span class="text-xs bg-green-600 px-2 py-1 rounded">In Stock</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center mt-6">
+                    <div class="carousel-indicator active" data-index="0"></div>
+                    <div class="carousel-indicator" data-index="1"></div>
+                </div>
+            </div>
+        </section>
+        <!-- Deal of the Day -->
+        <section class="py-12 bg-gradient-to-r from-[#1a1a2e] to-[#2a2a4e]">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="w-full md:w-1/2 mb-8 md:mb-0">
+                        <h2 class="text-2xl md:text-3xl font-bold mb-4 neon-glow">Deal of the Day</h2>
+                        <h3 class="text-xl md:text-2xl font-medium mb-4">Chainsaw Man Pochita Plush</h3>
+                        <p class="text-gray-300 mb-6">Limited edition Pochita plush toy from the hit anime Chainsaw Man. Super soft, high-quality material, perfect for collectors and fans alike!</p>
+                        
+                        <div class="flex space-x-4 mb-6">
+                            <div class="text-center">
+                                <div class="bg-[#2a2a4e] rounded p-3 w-16 h-16 flex items-center justify-center mb-1">
+                                    <span class="text-2xl font-bold" id="hours">24</span>
+                                </div>
+                                <span class="text-sm text-gray-400">Hours</span>
+                            </div>
+                            <div class="text-center">
+                                <div class="bg-[#2a2a4e] rounded p-3 w-16 h-16 flex items-center justify-center mb-1">
+                                    <span class="text-2xl font-bold" id="minutes">00</span>
+                                </div>
+                                <span class="text-sm text-gray-400">Minutes</span>
+                            </div>
+                            <div class="text-center">
+                                <div class="bg-[#2a2a4e] rounded p-3 w-16 h-16 flex items-center justify-center mb-1">
+                                    <span class="text-2xl font-bold" id="seconds">00</span>
+                                </div>
+                                <span class="text-sm text-gray-400">Seconds</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center mb-6">
+                            <span class="text-gray-400 text-xl line-through mr-3">$49.99</span>
+                            <span class="text-white text-3xl font-bold">$29.99</span>
+                            <span class="ml-3 bg-primary text-white px-2 py-1 rounded text-sm">40% OFF</span>
+                        </div>
+                        
+                        <div class="flex space-x-4">
+                            <a href="#" class="px-6 py-3 bg-primary text-white rounded-button neon-button font-medium whitespace-nowrap">Buy Now</a>
+                            <a href="#" class="px-6 py-3 bg-transparent border border-white text-white rounded-button hover:border-primary hover:text-primary transition-colors whitespace-nowrap">Add to Cart</a>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full md:w-1/2">
+                        <div class="relative">
+                            <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20plush%20toy%20of%20Pochita%20from%20Chainsaw%20Man%2C%20cute%20orange%20dog-like%20creature%20with%20chainsaw%20nose%2C%20professional%20product%20photography%20on%20simple%20background%2C%20high%20resolution&width=600&height=600&seq=11&orientation=squarish" alt="Pochita Plush" class="w-full rounded-lg">
+                            <div class="absolute top-4 right-4 bg-red-600 text-white px-3 py-2 rounded-full text-sm font-bold animate-pulse">
+                                Limited Stock!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browse by Anime -->
+        <section class="py-12 bg-[#0c0c16]">
+            <div class="container mx-auto px-4">
+                <h2 class="text-2xl md:text-3xl font-bold mb-8 neon-glow">Browse by Anime</h2>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    <a href="#" class="anime-grid-item rounded overflow-hidden">
+                        <div class="relative h-40">
+                            <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20artwork%20of%20Naruto%20Uzumaki%20with%20bright%20orange%20outfit%20and%20headband%2C%20professional%20illustration%2C%20high%20resolution&width=300&height=300&seq=12&orientation=squarish" alt="Naruto" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                            <h3 class="absolute bottom-2 left-2 text-white font-medium">Naruto</h3>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="anime-grid-item rounded overflow-hidden">
+                        <div class="relative h-40">
+                            <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20artwork%20of%20Demon%20Slayer%20with%20Tanjiro%20in%20his%20green%20and%20black%20uniform%20with%20sword%2C%20professional%20illustration%2C%20high%20resolution&width=300&height=300&seq=13&orientation=squarish" alt="Demon Slayer" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                            <h3 class="absolute bottom-2 left-2 text-white font-medium">Demon Slayer</h3>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="anime-grid-item rounded overflow-hidden">
+                        <div class="relative h-40">
+                            <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20artwork%20of%20Attack%20on%20Titan%20with%20Eren%20Yeager%20and%20Survey%20Corps%2C%20professional%20illustration%2C%20high%20resolution&width=300&height=300&seq=14&orientation=squarish" alt="Attack on Titan" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                            <h3 class="absolute bottom-2 left-2 text-white font-medium">Attack on Titan</h3>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="anime-grid-item rounded overflow-hidden">
+                        <div class="relative h-40">
+                            <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20artwork%20of%20My%20Hero%20Academia%20with%20Deku%20in%20his%20green%20hero%20costume%2C%20professional%20illustration%2C%20high%20resolution&width=300&height=300&seq=15&orientation=squarish" alt="My Hero Academia" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                            <h3 class="absolute bottom-2 left-2 text-white font-medium">My Hero Academia</h3>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="anime-grid-item rounded overflow-hidden">
+                        <div class="relative h-40">
+                            <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20artwork%20of%20One%20Piece%20with%20Luffy%20wearing%20straw%20hat%2C%20professional%20illustration%2C%20high%20resolution&width=300&height=300&seq=16&orientation=squarish" alt="One Piece" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                            <h3 class="absolute bottom-2 left-2 text-white font-medium">One Piece</h3>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="anime-grid-item rounded overflow-hidden">
+                        <div class="relative h-40">
+                            <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20artwork%20of%20Jujutsu%20Kaisen%20with%20Gojo%20Satoru%20with%20white%20hair%20and%20blindfold%2C%20professional%20illustration%2C%20high%20resolution&width=300&height=300&seq=17&orientation=squarish" alt="Jujutsu Kaisen" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                            <h3 class="absolute bottom-2 left-2 text-white font-medium">Jujutsu Kaisen</h3>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="anime-grid-item rounded overflow-hidden">
+                        <div class="relative h-40">
+                            <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20artwork%20of%20Dragon%20Ball%20with%20Goku%20with%20spiky%20hair%20in%20orange%20gi%2C%20professional%20illustration%2C%20high%20resolution&width=300&height=300&seq=18&orientation=squarish" alt="Dragon Ball" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                            <h3 class="absolute bottom-2 left-2 text-white font-medium">Dragon Ball</h3>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="anime-grid-item rounded overflow-hidden">
+                        <div class="relative h-40">
+                            <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20artwork%20of%20Tokyo%20Ghoul%20with%20Ken%20Kaneki%20with%20white%20hair%20and%20mask%2C%20professional%20illustration%2C%20high%20resolution&width=300&height=300&seq=19&orientation=squarish" alt="Tokyo Ghoul" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                            <h3 class="absolute bottom-2 left-2 text-white font-medium">Tokyo Ghoul</h3>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="anime-grid-item rounded overflow-hidden">
+                        <div class="relative h-40">
+                            <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20artwork%20of%20Hunter%20x%20Hunter%20with%20Gon%20and%20Killua%2C%20professional%20illustration%2C%20high%20resolution&width=300&height=300&seq=20&orientation=squarish" alt="Hunter x Hunter" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                            <h3 class="absolute bottom-2 left-2 text-white font-medium">Hunter x Hunter</h3>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="anime-grid-item rounded overflow-hidden">
+                        <div class="relative h-40">
+                            <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20artwork%20of%20Chainsaw%20Man%20with%20Denji%20with%20chainsaw%20head%2C%20professional%20illustration%2C%20high%20resolution&width=300&height=300&seq=21&orientation=squarish" alt="Chainsaw Man" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                            <h3 class="absolute bottom-2 left-2 text-white font-medium">Chainsaw Man</h3>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="anime-grid-item rounded overflow-hidden">
+                        <div class="relative h-40">
+                            <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20artwork%20of%20Spy%20x%20Family%20with%20Anya%2C%20Loid%20and%20Yor%2C%20professional%20illustration%2C%20high%20resolution&width=300&height=300&seq=22&orientation=squarish" alt="Spy x Family" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                            <h3 class="absolute bottom-2 left-2 text-white font-medium">Spy x Family</h3>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="anime-grid-item rounded overflow-hidden flex items-center justify-center bg-[#1a1a2e] h-40">
+                        <div class="text-center">
+                            <div class="w-10 h-10 flex items-center justify-center bg-[#2a2a4e] rounded-full mx-auto mb-2">
+                                <i class="ri-add-line text-xl text-primary"></i>
+                            </div>
+                            <span class="text-white">View All</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest Blog Posts -->
+        <section class="py-12 bg-[#0c0c16]">
+            <div class="container mx-auto px-4">
+                <h2 class="text-2xl md:text-3xl font-bold mb-8 neon-glow">Otaku Blog</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-[#1a1a2e] rounded overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20merchandise%20collection%20display%20with%20various%20figures%20and%20collectibles%20from%20different%20anime%20series%2C%20professional%20photography%2C%20high%20resolution&width=600&height=400&seq=23&orientation=landscape" alt="Top 10 Naruto Gifts" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="text-xs text-gray-400">April 12, 2025</span>
+                                <span class="mx-2 text-gray-500">•</span>
+                                <span class="text-xs text-primary">Gift Guide</span>
+                            </div>
+                            <h3 class="text-xl font-medium mb-3">Top 10 Naruto Gifts in 2025</h3>
+                            <p class="text-gray-300 text-sm mb-4">Looking for the perfect gift for a Naruto fan? We've rounded up the best merchandise that any shinobi would love to receive...</p>
+                            <a href="#" class="text-primary hover:text-white transition-colors flex items-center text-sm">
+                                Read More
+                                <span class="w-4 h-4 flex items-center justify-center ml-1">
+                                    <i class="ri-arrow-right-line"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-[#1a1a2e] rounded overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20cosplay%20of%20Demon%20Slayer%20character%20with%20costume%20and%20props%2C%20professional%20photography%2C%20high%20resolution&width=600&height=400&seq=24&orientation=landscape" alt="Demon Slayer Cosplay" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="text-xs text-gray-400">April 8, 2025</span>
+                                <span class="mx-2 text-gray-500">•</span>
+                                <span class="text-xs text-primary">Cosplay</span>
+                            </div>
+                            <h3 class="text-xl font-medium mb-3">Ultimate Guide to Demon Slayer Cosplay</h3>
+                            <p class="text-gray-300 text-sm mb-4">From Tanjiro's iconic hanafuda earrings to Nezuko's bamboo muzzle, here's everything you need for an authentic Demon Slayer cosplay...</p>
+                            <a href="#" class="text-primary hover:text-white transition-colors flex items-center text-sm">
+                                Read More
+                                <span class="w-4 h-4 flex items-center justify-center ml-1">
+                                    <i class="ri-arrow-right-line"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-[#1a1a2e] rounded overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=high%20quality%20anime%20convention%20with%20crowds%20of%20fans%20and%20merchandise%20booths%2C%20professional%20photography%2C%20high%20resolution&width=600&height=400&seq=25&orientation=landscape" alt="Anime Convention" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="text-xs text-gray-400">April 2, 2025</span>
+                                <span class="mx-2 text-gray-500">•</span>
+                                <span class="text-xs text-primary">News</span>
+                            </div>
+                            <h3 class="text-xl font-medium mb-3">Exclusive Merch Coming to AnimeExpo 2025</h3>
+                            <p class="text-gray-300 text-sm mb-4">Get a sneak peek at the limited-edition collectibles that will be available at this year's biggest anime convention...</p>
+                            <a href="#" class="text-primary hover:text-white transition-colors flex items-center text-sm">
+                                Read More
+                                <span class="w-4 h-4 flex items-center justify-center ml-1">
+                                    <i class="ri-arrow-right-line"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-8">
+                    <a href="#" class="px-6 py-3 bg-transparent border border-white text-white rounded-button hover:border-primary hover:text-primary transition-colors inline-block whitespace-nowrap">View All Posts</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="py-16 bg-gradient-to-r from-[#6a11cb] to-[#ff36b5]">
+            <div class="container mx-auto px-4">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-4">Join Our Otaku Community</h2>
+                    <p class="text-lg mb-8">Subscribe to get exclusive deals, early access to new merch drops, and anime news straight to your inbox!</p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+                        <input type="email" placeholder="Your email address" class="flex-1 px-4 py-3 rounded-button bg-white text-[#1a1a2e] border-none focus:outline-none focus:ring-2 focus:ring-white text-sm">
+                        <button class="px-6 py-3 bg-[#1a1a2e] text-white rounded-button hover:bg-[#2a2a4e] transition-colors whitespace-nowrap">Subscribe</button>
+                    </div>
+                    
+                    <p class="text-sm mt-4 text-white text-opacity-80">By subscribing, you agree to receive marketing emails from us. No worries, we won't spam you!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#0c0c16] pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <a href="#" class="logo text-primary text-3xl mb-4 inline-block">logo</a>
+                    <p class="text-gray-400 mb-6">Your one-stop shop for the best anime merchandise from across the web. We curate the coolest products for true otaku!</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-[#1a1a2e] text-white hover:bg-primary transition-colors">
+                            <i class="ri-instagram-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-[#1a1a2e] text-white hover:bg-primary transition-colors">
+                            <i class="ri-twitter-x-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-[#1a1a2e] text-white hover:bg-primary transition-colors">
+                            <i class="ri-discord-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-[#1a1a2e] text-white hover:bg-primary transition-colors">
+                            <i class="ri-tiktok-line"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Shop</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Anime Wiki</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Deals</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Categories</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Figures & Statues</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Apparel & Clothing</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Home Decor</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Manga & Books</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Accessories</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Limited Editions</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-medium mb-4">Customer Service</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Shipping Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Return Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Affiliate Program</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-[#2a2a4e] pt-6">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 OtakuTreasure. All rights reserved.</p>
+                    <div class="flex items-center space-x-4">
+                        <span class="w-8 h-8 flex items-center justify-center text-gray-400">
+                            <i class="ri-visa-fill text-2xl"></i>
+                        </span>
+                        <span class="w-8 h-8 flex items-center justify-center text-gray-400">
+                            <i class="ri-mastercard-fill text-2xl"></i>
+                        </span>
+                        <span class="w-8 h-8 flex items-center justify-center text-gray-400">
+                            <i class="ri-paypal-fill text-2xl"></i>
+                        </span>
+                        <span class="w-8 h-8 flex items-center justify-center text-gray-400">
+                            <i class="ri-amazon-fill text-2xl"></i>
+                        </span>
+                        <span class="w-8 h-8 flex items-center justify-center text-gray-400">
+                            <i class="ri-apple-fill text-2xl"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cherry blossom animation
+            function createCherryBlossom() {
+                const blossom = document.createElement('div');
+                blossom.classList.add('cherry-blossom');
+                
+                // Random position
+                const startPositionX = Math.random() * window.innerWidth;
+                blossom.style.left = `${startPositionX}px`;
+                
+                // Random size
+                const size = Math.random() * 10 + 10;
+                blossom.style.width = `${size}px`;
+                blossom.style.height = `${size}px`;
+                
+                // Random animation duration
+                const animationDuration = Math.random() * 10 + 5;
+                blossom.style.animationDuration = `${animationDuration}s`;
+                
+                document.body.appendChild(blossom);
+                
+                // Remove after animation completes
+                setTimeout(() => {
+                    blossom.remove();
+                }, animationDuration * 1000);
+            }
+            
+            // Create cherry blossoms periodically
+            setInterval(createCherryBlossom, 300);
+            
+            // Carousel functionality
+            const track = document.querySelector('.carousel-track');
+            const slides = document.querySelectorAll('.carousel-slide');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            let currentIndex = 0;
+            
+            function updateCarousel() {
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                indicators.forEach((indicator, index) => {
+                    if (index === currentIndex) {
+                        indicator.classList.add('active');
+                    } else {
+                        indicator.classList.remove('active');
+                    }
+                });
+            }
+            
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
+                updateCarousel();
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
+                updateCarousel();
+            });
+            
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateCarousel();
+                });
+            });
+            
+            // Countdown timer
+            function updateCountdown() {
+                const now = new Date();
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                tomorrow.setHours(0, 0, 0, 0);
+                
+                const diff = tomorrow - now;
+                
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            }
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+    </script>
+</body>
+</html>

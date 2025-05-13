@@ -1,29 +1,113 @@
-const express=require('express');
-const route=express.Router();
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
+const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
-route.use(express.json());
+// Middleware to check if user is authenticated
+const isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+};
 
-// Create a new user (POST )
+// Middleware to check if user is not authenticated
+const isNotAuthenticated = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/welcome');
+};
 
-
-
-route.post('/signup', async (req, res) => {
-    try {
-        console.log(req.body);
-        const { username, email, password } = req.body;
-        const user = new User({ username, email, password });
-        await user.save();
-        res.status(201).json({ message: 'User created', user });
-        res.redirect('/');
-    } catch (err) {
-        res.status(400).json({ error: err.message });
-    }
+// Home page
+router.get('/', (req, res) => {
+  res.render('home', { user: req.user });
 });
 
+// Login page
+router.get('/login', isNotAuthenticated, (req, res) => {
+  res.render('login', { error: req.flash('error') });
+});
+
+// Register page
+router.get('/register', isNotAuthenticated, (req, res) => {
+  res.render('register', { error: req.flash('error') });
+});
+
+// Welcome page (protected route)
+router.get('/welcome', isAuthenticated, (req, res) => {
+  res.render('welcome', { user: req.user });
+});
+
+// Login handler
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/welcome',
+  failureRedirect: '/login',
+  failureFlash: true
+}));
+
+// Register handler
+router.post('/register', async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ 
+      $or: [{ email }, { username }] 
+    });
+
+    if (existingUser) {
+      req.flash('error', 'Username or email already exists');
+      return res.redirect('/register');
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create new user
+    const user = new User({
+      username,
+      email,
+      password: hashedPassword
+    });
+
+    await user.save();
+
+    // Log the user in after registration
+    req.login(user, (err) => {
+      if (err) {
+        console.error('Error during auto-login after registration:', err);
+        return res.redirect('/login');
+      }
+      res.redirect('/welcome');
+    });
+
+  } catch (err) {
+    console.error('Registration error:', err);
+    req.flash('error', 'Error during registration');
+    res.redirect('/register');
+  }
+});
+
+// Logout handler
+router.get('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.error('Error during logout:', err);
+      return res.redirect('/welcome');
+    }
+    res.redirect('/');
+  });
+});
+
+// Protected route example
+router.get('/profile', isAuthenticated, (req, res) => {
+  res.render('profile', { user: req.user });
+});
 
 // Get all users (GET /users)
-route.get('/users', async (req, res) => {
+router.get('/users', async (req, res) => {
     try {
         const users = await User.find();
         res.json(users);
@@ -32,11 +116,8 @@ route.get('/users', async (req, res) => {
     }
 });
 
-
-
-route.get('/',(req,res)=>{
+router.get('/enter',(req,res)=>{
     res.render('main');
 })
 
-
-module.exports= route;
+module.exports = router;

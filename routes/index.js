@@ -41,16 +41,43 @@ router.get('/welcome', isAuthenticated, (req, res) => {
 });
 
 // Login handler
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/welcome',
-  failureRedirect: '/login',
-  failureFlash: true
-}));
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      console.error('Login error:', err);
+      req.flash('error', 'An error occurred during login');
+      return res.redirect('/login');
+    }
+    if (!user) {
+      req.flash('error', info.message || 'Invalid username or password');
+      return res.redirect('/login');
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        console.error('Login error:', err);
+        req.flash('error', 'An error occurred during login');
+        return res.redirect('/login');
+      }
+      return res.redirect('/welcome');
+    });
+  })(req, res, next);
+});
 
 // Register handler
 router.post('/register', async (req, res) => {
   try {
     const { username, email, password } = req.body;
+
+    // Validate input
+    if (!username || !email || !password) {
+      req.flash('error', 'All fields are required');
+      return res.redirect('/register');
+    }
+
+    if (password.length < 6) {
+      req.flash('error', 'Password must be at least 6 characters long');
+      return res.redirect('/register');
+    }
 
     // Check if user already exists
     const existingUser = await User.findOne({ 
@@ -78,14 +105,16 @@ router.post('/register', async (req, res) => {
     req.login(user, (err) => {
       if (err) {
         console.error('Error during auto-login after registration:', err);
+        req.flash('error', 'Registration successful, please login');
         return res.redirect('/login');
       }
+      req.flash('success', 'Registration successful!');
       res.redirect('/welcome');
     });
 
   } catch (err) {
     console.error('Registration error:', err);
-    req.flash('error', 'Error during registration');
+    req.flash('error', 'Error during registration. Please try again.');
     res.redirect('/register');
   }
 });
@@ -97,6 +126,7 @@ router.get('/logout', (req, res) => {
       console.error('Error during logout:', err);
       return res.redirect('/welcome');
     }
+    req.flash('success', 'Successfully logged out');
     res.redirect('/');
   });
 });
@@ -106,14 +136,15 @@ router.get('/profile', isAuthenticated, (req, res) => {
   res.render('profile', { user: req.user });
 });
 
-// Get all users (GET /users)
-router.get('/users', async (req, res) => {
-    try {
-        const users = await User.find();
-        res.json(users);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+// Get all users (protected route)
+router.get('/users', isAuthenticated, async (req, res) => {
+  try {
+    const users = await User.find().select('-password');
+    res.json(users);
+  } catch (err) {
+    console.error('Error fetching users:', err);
+    res.status(500).json({ error: 'Error fetching users' });
+  }
 });
 
 router.get('/enter',(req,res)=>{

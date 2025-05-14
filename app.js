@@ -6,6 +6,7 @@ const routepath = require('./routes/index');
 const expressSession = require("express-session");
 const passport = require("passport");
 const connectDB = require('./db/mongo');
+const flash = require('connect-flash');
 
 // Connect to MongoDB
 connectDB();
@@ -30,13 +31,21 @@ app.use(expressSession({
   }
 }));
 
+// Flash messages middleware
+app.use(flash());
+
 // Initialize Passport and restore authentication state from session
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Make user available to all views
+// Load passport configuration
+require('./config/passport');
+
+// Make user and flash messages available to all views
 app.use((req, res, next) => {
   res.locals.user = req.user;
+  res.locals.error = req.flash('error');
+  res.locals.success = req.flash('success');
   next();
 });
 
@@ -45,7 +54,7 @@ app.use('/', routepath);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error('Error:', err);
   res.status(500).render('error', { 
     message: 'Something went wrong!',
     error: process.env.NODE_ENV === 'development' ? err : {}
